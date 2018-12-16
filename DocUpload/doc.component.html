@@ -1,20 +1,43 @@
-<form #userForm="ngForm" (ngsubmit)="onSubmit()" invalidate>
+<form [formGroup]="userForm" (ngsubmit)="onSubmit()" invalidate>
         <div class="example-container">
                 <mat-form-field>
-                  <input matInput placeholder="Addhar No" required name="AddharNo" [(ngModel)]="details.adhno">
+                  <input matInput placeholder="Addhar No" required formControlName="AddharNo" [(ngModel)]="details.adhno">
                 </mat-form-field>
                 <mat-form-field>
-                        <input matInput placeholder="Bank Account No" required name="BankAcNo" [(ngModel)]="details.bankacno">
+                        <input matInput placeholder="Bank Account No" required formControlName="BankAcNo" [(ngModel)]="details.bankacno">
                 </mat-form-field>
                 <mat-form-field>
-                        <input matInput placeholder="Pan Card No" required name="PanCardNo" [(ngModel)]="details.pancardno">
+                        <input matInput placeholder="Pan Card No" required formControlName="PanCardNo" [(ngModel)]="details.pancardno">
                 </mat-form-field>
                 <mat-form-field>
-                        <input matInput placeholder="Nominee" required name="Nominee" [(ngModel)]="details.nominee">
+                        <input matInput placeholder="Nominee" required formControlName="Nominee" [(ngModel)]="details.nominee">
                 </mat-form-field>
                 <br>
                 <label class="label">All KYC Documents *</label>
-                <input type="file" accept=".txt,.doc,.jpg,.png" name="files[]" multiple>
+                
+                <button mat-button (click)="dispplay()"  type="submit">Upload</button>
+                <div *ngIf="decide" formGroupName="Documents">
+                        <label class="custom-file-upload dropdown">
+                                        Police Verification
+                                <input type="file" formControlName="PoliceVerification">
+                                
+                        </label>
+                        <div *ngIf="userForm.controls['Documents'].controls['PoliceVerification'].hasError['required']">
+                                Please choose a file
+                        </div>
+                        <label class="custom-file-upload dropdown">
+                                Pan Card
+                                <input type="file" formControlName="PanCard">
+                        
+                        </label>
+                        <label class="custom-file-upload dropdown">
+                                Nominee Details
+                                <input type="file" formControlName="NomineeDetails">
+                        
+                        </label>
+                        
+                </div> 
+                
                 <button mat-button class="sub" type="submit">Submit</button>
         </div>
 
